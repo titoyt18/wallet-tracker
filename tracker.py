@@ -1,5 +1,5 @@
 """
-Wallet Tracker Solana - v1.1 (transactions version 1 + erreurs isolées)
+Wallet Tracker Solana - v1.2 (message de statut au lancement manuel)
 Alertes Telegram sur les achats et ventes de wallets Solana.
 
 MODE=check   -> lancé toutes les 10 min : alerte immédiate sur chaque ACHAT
@@ -197,9 +197,12 @@ def fmt_buy(t, info):
 # ---------- Modes ----------
 
 def check(state):
+    manual = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
+    report = []
     for w in WALLETS:
         sigs = rpc("getSignaturesForAddress", [w, {"limit": SIG_LIMIT}])
         if not sigs:
+            report.append(f"⚠️ <code>{short(w)}</code> : aucune transaction trouvée (adresse à vérifier)")
             continue
         last = state["last_sig"].get(w)
 
@@ -241,6 +244,17 @@ def check(state):
 
         state["last_sig"][w] = sigs[0]["signature"]
         print(f"{short(w)} : {len(new)} nouvelle(s) transaction(s)")
+
+        day = [t for t in state["day"] if t["wallet"] == w]
+        n_buy = sum(1 for t in day if t["side"] == "buy")
+        n_sell = sum(1 for t in day if t["side"] == "sell")
+        report.append(
+            f"<code>{short(w)}</code> : {len(new)} nouvelle(s) transaction(s)\n"
+            f"Depuis le dernier résumé : 🟢 {n_buy} achat(s) · 🔴 {n_sell} vente(s)"
+        )
+
+    if manual:
+        tg("🤖 <b>Tracker en marche</b>\n" + "\n\n".join(report))
 
 
 def summary(state):
