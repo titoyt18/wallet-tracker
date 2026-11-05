@@ -1,5 +1,5 @@
 """
-Wallet Tracker Solana - v1.0
+Wallet Tracker Solana - v1.1 (transactions version 1 + erreurs isolées)
 Alertes Telegram sur les achats et ventes de wallets Solana.
 
 MODE=check   -> lancé toutes les 10 min : alerte immédiate sur chaque ACHAT
@@ -217,12 +217,16 @@ def check(state):
         for s in reversed(new):  # du plus ancien au plus récent
             if s.get("err"):
                 continue
-            tx = rpc("getTransaction", [s["signature"], {
-                "encoding": "jsonParsed",
-                "maxSupportedTransactionVersion": 0,
-                "commitment": "confirmed",
-            }])
-            t = parse_trade(tx, w)
+            try:
+                tx = rpc("getTransaction", [s["signature"], {
+                    "encoding": "jsonParsed",
+                    "maxSupportedTransactionVersion": 1,
+                    "commitment": "confirmed",
+                }])
+                t = parse_trade(tx, w)
+            except Exception as e:  # une transaction illisible ne bloque plus tout
+                print(f"Transaction ignorée {s['signature'][:8]}… : {e}")
+                continue
             if not t:
                 continue
             t["wallet"] = w
