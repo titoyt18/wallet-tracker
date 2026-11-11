@@ -2,28 +2,5 @@
   "last_sig": {
     "862TYSvRYoiHAK3F3WwTRYAfuGiQaGdxedN9AGvRGWo2": "2bcWTxkY2h5wuYBAy9TXvWcLZQvdpVwsr14TirhXrwTp65CqETqgL3XhfT1SppLoscRLzGvSQEFDkpcaNXjob9S"
   },
-  "day": [
-    {
-      "side": "sell",
-      "mint": "7x3ujazwvFMvbM3akMVDHGbaXK1aDgzxQ5966seppump",
-      "amount": 63130891.652881,
-      "sol": 6.036,
-      "usdc": 0,
-      "time": 1794389867,
-      "wallet": "862TYSvRYoiHAK3F3WwTRYAfuGiQaGdxedN9AGvRGWo2",
-      "sig": "3yWi6rohppBmhA6N8FTMhbaUjREGEF37uVeivdf8osyZMHgjq4AS687y5Pp8RnBetc1VHNCFL45fJXTz8dA1VMjp",
-      "symbol": "xihao"
-    },
-    {
-      "side": "sell",
-      "mint": "CBEYW2Xb4srfZFwveBHtazsv5idCX5ijEhwczFiupump",
-      "amount": 112232696.271788,
-      "sol": 9.3361,
-      "usdc": 0,
-      "time": 1794402051,
-      "wallet": "862TYSvRYoiHAK3F3WwTRYAfuGiQaGdxedN9AGvRGWo2",
-      "sig": "dAZun9xtPGqGHYcGS7XnuPPufcrkPj7AfEhWRLEkcwZjoSW1GK89KqvUmkdpuJtbXzGh5BnCTRJFx2i75ddUApa",
-      "symbol": "Banana "
-    }
-  ]
+  "day": []
 }
